@@ -4,7 +4,7 @@
 
 Run `scripts/install.py --project <existing-directory> --agent both` from a clone of this repository. Choose `codex` or `claude` for a single host. Preview with `--dry-run`. Python 3.9+ is required; no pip installation is needed.
 
-The project path may contain spaces when quoted. The script preflights all planned destinations before writing, rejects symlinks inside the selected project, preserves existing bytes in instruction files, and leaves existing memory untouched. It resolves the project path itself, so a project path alias targets its resolved directory.
+The project path may contain spaces when quoted. The script checks that the source entry point and memory template exist, preflights all planned destinations before writing, rejects symlinks inside the selected project, preserves existing bytes in instruction files, and leaves existing memory untouched. It resolves the project path itself, so a project path alias targets its resolved directory.
 
 Run it while no other process is editing the installation destinations. It detects common concurrent changes but is not a filesystem transaction: an I/O failure or concurrent write can leave a partial installation. Inspect the diff, resolve the cause, and rerun. It never commits, pushes, changes global configuration, or executes project commands.
 

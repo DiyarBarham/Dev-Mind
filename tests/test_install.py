@@ -2,6 +2,7 @@ import importlib.util
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 
 SPEC = importlib.util.spec_from_file_location("installer", Path(__file__).resolve().parents[1] / "scripts/install.py")
@@ -78,6 +79,32 @@ class InstallTests(unittest.TestCase):
         before = self.snapshot()
         self.assertEqual(self.run_install(), 1)
         self.assertEqual(before, self.snapshot())
+
+    def test_codex_only_preserves_claude_configuration(self):
+        (self.root / "CLAUDE.md").write_bytes(b"Private Claude configuration\r\n")
+        self.assertEqual(self.run_install("--agent", "codex"), 0)
+        self.assertEqual((self.root / "CLAUDE.md").read_bytes(), b"Private Claude configuration\r\n")
+        self.assertFalse((self.root / ".claude").exists())
+
+    def test_non_utf8_instructions_stop_before_writes(self):
+        (self.root / "CLAUDE.md").write_bytes(b"\xff\xfe")
+        before = self.snapshot()
+        self.assertEqual(self.run_install(), 1)
+        self.assertEqual(before, self.snapshot())
+
+    def test_missing_skill_entrypoint_stops_before_writes(self):
+        with tempfile.TemporaryDirectory() as source:
+            source = Path(source)
+            (source / "assets").mkdir()
+            (source / "assets/DEV_MIND.md").write_text("Template")
+            with patch.object(installer, "SOURCE", source):
+                self.assertEqual(self.run_install(), 1)
+        self.assertEqual(list(self.root.iterdir()), [])
+
+    def test_permission_error_is_reported_without_success(self):
+        with patch.object(installer, "plan_install", side_effect=PermissionError("read-only")):
+            self.assertEqual(self.run_install(), 1)
+        self.assertEqual(list(self.root.iterdir()), [])
 
 
 if __name__ == "__main__":

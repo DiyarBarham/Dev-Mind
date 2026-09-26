@@ -38,7 +38,7 @@ useful attempts, procedures, and open threads in shared project Markdown.
 - Updated: 2026-09-26
 - Statement: Distribute one Markdown skill to both hosts, with a root `DEV_MIND.md` and optional linked area notes. Add host instruction bridges for fresh sessions.
 - Why: Keep memory portable, readable, reviewable, and independent of hosted memory services.
-- Evidence: Host documentation confirms skill discovery and separate startup instructions; installer preservation tests pass. Real host startup behavior still needs end-to-end verification.
+- Evidence: Host documentation confirms skill discovery and separate startup instructions; 12 installer tests and 20 behavioral scenarios pass their task-specific checks. Real host startup behavior still needs end-to-end verification; see [evaluation](docs/evaluation.md).
 - Alternatives: Background hooks and a database omitted from the initial release because they add host-specific behavior and operational dependencies.
 
 ### auth-sandbox — Restricted auth failure was misleading
@@ -58,14 +58,35 @@ useful attempts, procedures, and open threads in shared project Markdown.
 - [Installation](docs/installation.md): host paths, conservative file handling, updates, and removal.
 - [Evaluation](docs/evaluation.md): test evidence and remaining validation gaps.
 
+### observations-versus-decisions — Preserve observed state without inventing a choice
+- Kind: decision
+- Status: accepted
+- Scope: skill record taxonomy
+- Source: H10 artifact review in the 20-scenario evaluation, 2026-09-26
+- Updated: 2026-09-26
+- Statement: Use an observation kind for facts inspected in files or reported by a developer; reserve accepted decisions for established choices.
+- Why: H10 labeled a configured timeout change as an accepted decision despite having no stated choice or rationale.
+- Evidence: Baseline artifact retained in `evaluations/2026-09-26/baseline.json`; observation guidance added to the skill and record reference. Fresh-agent H04/H10 reruns classified observed state correctly and preserved configuration; outputs retained in `retest.json` alongside the baseline.
+
+### missing-entrypoint — Reject incomplete installation sources
+- Kind: decision
+- Status: accepted
+- Scope: `scripts/install.py`
+- Source: regression test, 2026-09-26
+- Updated: 2026-09-26
+- Statement: Require the source `SKILL.md` and memory template before planning installation writes.
+- Why: A package without the skill entry point previously reported successful installation.
+- Evidence: Added regression failed before the change and passed after it; all 12 installer tests pass.
+
 ## Open threads
 
 ### host-smoke-tests — Verify fresh sessions in both products
 - Kind: open-thread
-- Status: untested
+- Status: blocked
 - Scope: Codex and Claude Code discovery and startup behavior
 - Source: initial validation scope, 2026-09-26
 - Updated: 2026-09-26
 - Statement: Run the documented two-session scenario in separate real Codex and Claude Code sessions.
 - Why: File tests and one model simulation do not establish host-specific loading or consistent compliance.
-- Evidence: Not yet tested end to end in both products.
+- Evidence: Read-only fresh CLI attempts on 2026-09-26 did not complete inference: Claude Code 2.1.220 was not logged in; Codex CLI 0.141.0 returned a service error requiring a newer CLI for the configured model. No credentials or global model configuration were changed.
+- Next step: Once both products are authenticated and version-compatible, repeat fresh-session write/read checks; do not infer host behavior from the simulated scenario suite.

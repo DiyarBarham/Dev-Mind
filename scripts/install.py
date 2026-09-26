@@ -41,6 +41,9 @@ def safe_path(root, relative):
 
 def plan_install(root, agent):
     """Preflight every destination before making any edits."""
+    for required in ("SKILL.md", "assets/DEV_MIND.md"):
+        if not (SOURCE / required).is_file():
+            raise ValueError(f"Incomplete skill package; missing: {SOURCE / required}")
     changes = []
     hosts = ("codex", "claude") if agent == "both" else (agent,)
     for host in hosts:

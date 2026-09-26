@@ -23,7 +23,7 @@ Use an actual observed date and actual evidence in live records. Example values 
 | Field | Purpose |
 | --- | --- |
 | ID and title | A descriptive, stable heading unique within its file. |
-| Kind | `instruction`, `decision`, `attempt`, `procedure`, or `open-thread`. |
+| Kind | `instruction`, `decision`, `observation`, `attempt`, `procedure`, or `open-thread`. |
 | Status | State the type-specific status below. |
 | Scope | Project-wide, affected paths/topic/environment, or task/release-limited. |
 | Source | Who requested it or where it was observed, with a date or durable reference. |
@@ -40,12 +40,15 @@ For relative limits such as “this week,” retain the original wording and sou
 
 - Instructions: `active`, `superseded`, `expired`.
 - Decisions: `proposed`, `accepted`, `superseded`.
+- Observations: `observed`, `reported`, `stale`. Distinguish a fact inspected directly from a claim reported by another source; state verification limits in either case.
 - Attempts: `failed`, `succeeded`, `inconclusive`.
 - Procedures: `documented` (not verified), `verified`, `stale`.
 - Open threads: `untested`, `blocked`, `resolved`, `abandoned`.
 - Any kind may be `disputed` or `stale` when applicable; explain the uncertainty.
 
 Success is scoped to its evidence. A unit test passing is not proof of a successful production deployment. A command failing due to a sandbox restriction is not evidence that credentials are invalid. An interruption is not a failed hypothesis.
+
+A changed configuration value without a stated choice or rationale belongs in an observation, not an accepted decision. For example, reading `timeout_seconds=120` establishes the repository value; it does not establish that the setting is deployed or that the developer approved an architectural change. Keep any resulting proposed experiment in a separate open thread when useful.
 
 ## Debugging records
 

@@ -109,7 +109,7 @@ Only store information suitable for the repository's audience. Git history can r
 python3 -m unittest discover -s tests -v
 ```
 
-Installer tests cover preservation, repeat installation, single-host selection, dry runs, collisions, malformed/custom bridges, and symlink refusal. CI runs those tests. Behavioral scenarios and their limits are documented in [evaluation](docs/evaluation.md); passing file tests does not prove that every model will follow the skill.
+The 12 installer tests cover preservation, repeat installation, host selection, dry runs, collisions, malformed/custom bridges, symlink refusal, incomplete packages, and error reporting. CI also checks retained behavioral artifacts. Ten easy and ten difficult scenarios have been exercised and reviewed; see [evaluation](docs/evaluation.md) for results, fixes, and the remaining real-host verification limits. Passing these checks does not prove that every model will follow the skill.
 
 Contributions are welcome; see [CONTRIBUTING.md](CONTRIBUTING.md). Licensed under [MIT](LICENSE). Dev Mind is an independent project, not an official OpenAI or Anthropic product.
 

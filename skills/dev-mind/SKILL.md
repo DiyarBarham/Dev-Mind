@@ -23,6 +23,7 @@ Capture information that could change a future decision:
 
 - **Instruction:** developer requirements, preferences, prohibitions, and their exact scope. Preserve “for this release” versus “always.” Label one-time requests as task-specific; do not promote them into project policy.
 - **Decision:** the chosen approach, reason, relevant alternatives and tradeoffs, constraints, and supporting evidence.
+- **Observation:** a fact found in files or reported by the developer, with the boundary of what was actually checked. A configuration value is not an accepted design decision or proof of effective runtime behavior.
 - **Attempt:** the condition tested, approach, observed result, and evidence. Separate an observed failure from a suspected explanation. Record when retrying would make sense.
 - **Procedure:** the canonical deployment/build/recovery runbook or verified steps, environment, prerequisites, verification, and known recovery path. Mark unknown or untested steps honestly. Link existing procedures instead of copying them.
 - **Open thread:** a next step, why it is worth trying, and what result would support or reject it. Label it proposed or untested.
