@@ -1,0 +1,6 @@
+interface:
+  display_name: "Dev Mind"
+  short_description: "Keep project decisions and lessons across sessions"
+  default_prompt: "Use $dev-mind to read relevant project memory and preserve durable lessons from this task."
+policy:
+  allow_implicit_invocation: true
